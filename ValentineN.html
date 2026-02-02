@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will You Be My Valentine?</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+
+body{
+  height:100vh;
+  background:linear-gradient(135deg,#ff4d6d,#ff8fab);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  color:#fff;
+}
+
+.card{
+  background:rgba(255,255,255,0.22);
+  backdrop-filter:blur(14px);
+  padding:35px 30px;
+  border-radius:24px;
+  text-align:center;
+  max-width:370px;
+  box-shadow:0 30px 60px rgba(0,0,0,0.35);
+  animation:fadeIn 2s ease;
+  position:relative;
+}
+
+h1{font-family:'Great Vibes',cursive;font-size:46px}
+h2{font-weight:400;margin-top:6px}
+
+.photo{
+  width:145px;height:145px;border-radius:50%;
+  object-fit:cover;border:4px solid rgba(255,255,255,0.85);
+  margin:16px auto;
+}
+
+#letter{
+  font-size:15px;
+  min-height:90px;
+  margin:15px 0;
+  line-height:1.7;
+}
+
+.countdown{font-weight:600;margin:12px 0 18px}
+
+.buttons{position:relative;height:50px}
+
+button{
+  padding:12px 24px;border-radius:30px;border:none;
+  font-size:16px;cursor:pointer;
+}
+
+.yes{
+  background:#ff2f68;color:white;
+  box-shadow:0 12px 30px rgba(255,47,104,0.6);
+}
+.yes:hover{transform:scale(1.15)}
+
+.no{
+  position:absolute;background:rgba(255,255,255,0.35);color:white;
+}
+
+.hearts span{
+  position:absolute;bottom:-20px;font-size:22px;
+  animation:float 6s linear infinite;
+}
+
+@keyframes float{
+  from{transform:translateY(0);opacity:1}
+  to{transform:translateY(-100vh);opacity:0}
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(25px)}
+  to{opacity:1;transform:translateY(0)}
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎵 Background Music -->
+<audio id="music" loop>
+  <source src="perfect.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+  <h1>My Love ❤️</h1>
+  <h2>Dear <strong>Nishigandha</strong></h2>
+
+  <img src="photo.jpg" class="photo">
+
+  <!-- 💌 Typewriter Letter -->
+  <div id="letter"></div>
+
+  <div class="countdown" id="countdown"></div>
+
+  <div class="buttons">
+    <button class="yes" onclick="yesClicked()">Yes 💕</button>
+    <button class="no" id="noBtn">No 🙈</button>
+  </div>
+</div>
+
+<div class="hearts"></div>
+
+<script>
+/* 🎵 Play music on first click */
+document.body.addEventListener('click',()=>{
+  document.getElementById('music').play();
+},{once:true});
+
+/* 💌 Typewriter Love Letter */
+const text = `From the moment you walked into my life,
+everything felt warmer, brighter, and more meaningful.
+You are my today, my tomorrow, and my forever.
+
+Will you be my Valentine? 💖`;
+
+let i=0;
+const letterEl=document.getElementById('letter');
+(function type(){
+  if(i<text.length){
+    letterEl.innerHTML+=text.charAt(i);
+    i++; setTimeout(type,40);
+  }
+})();
+
+/* 🙈 Runaway NO */
+const noBtn=document.getElementById('noBtn');
+noBtn.addEventListener('mouseover',()=>{
+  noBtn.style.transform=`translate(${Math.random()*220-110}px,${Math.random()*160-80}px)`;
+});
+
+/* ❤️ Floating Hearts */
+const hearts=['❤️','💖','💕','💘'];
+setInterval(()=>{
+  const h=document.createElement('span');
+  h.innerText=hearts[Math.floor(Math.random()*hearts.length)];
+  h.style.left=Math.random()*100+'vw';
+  document.querySelector('.hearts').appendChild(h);
+  setTimeout(()=>h.remove(),7000);
+},300);
+
+/* 🎆 YES CLICK – FOREVER MODE */
+function yesClicked(){
+  document.body.innerHTML=`
+  <div style="text-align:center;color:white;">
+    <h1 style="font-family:'Great Vibes',cursive;font-size:60px;">
+      Forever Begins 💍
+    </h1>
+    <p style="font-size:22px;margin-top:20px;">
+      Nishigandha, you are my Valentine<br>today and always ❤️
+    </p>
+    <p style="font-size:18px;margin-top:15px;">
+      I love you endlessly.
+    </p>
+  </div>`;
+}
+
+/* ⏳ Countdown */
+const target=new Date("Feb 14, 2026 00:00:00").getTime();
+setInterval(()=>{
+  const now=new Date().getTime();
+  const d=target-now;
+  document.getElementById('countdown').innerHTML=
+  `⏳ ${Math.floor(d/(1000*60*60*24))} days to Valentine’s Day`;
+},1000);
+</script>
+
+</body>
+</html>
